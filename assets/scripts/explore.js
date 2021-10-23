@@ -12,23 +12,33 @@ function init() {
   var chosenVoice = '';
   var image = document.querySelector('img');
   
-  var voices = synth.getVoices();
-  console.log(voices);
+  //initialized in populateList();
+  var voices = [];
 
-  //populate language and speaker options
+  setTimeout(() => {
+    console.log(window.speechSynthesis.getVoices());
+    populateList();
+  }, 50);
+  
+  
+  //populated selections
+  function populateList() { 
+    voices = window.speechSynthesis.getVoices();
+    
+    //populate language and speaker options
     for(var i = 0; i < voices.length; i++) {
-      var option = document.createElement('option');
-      option.textContent = voices[i].name + ' (' + voices[i].lang + ')';
-      option.value = i;
-      selectedVoice.appendChild(option)
+        var option = document.createElement('option');
+        option.textContent = voices[i].name + ' (' + voices[i].lang + ')';
+        option.value = i;
+        selectedVoice.appendChild(option)
     }
+  }
   
   
   //construct utter, speak it, update image until utter ends.
   button.addEventListener('click', function() {
     let testInput = textBox.value;
     let utterThis = new SpeechSynthesisUtterance(testInput);
-    console.log(voices[selectedVoice.value]);
     utterThis.voice = voices[selectedVoice.value];
     image.setAttribute('src', 'assets/images/smiling-open.png');
     synth.speak(utterThis);
@@ -38,4 +48,6 @@ function init() {
     });
   });
 }
+
+
 
