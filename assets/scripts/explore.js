@@ -10,23 +10,19 @@ function init() {
   //synthesis object
   var synth = window.speechSynthesis;
   var chosenVoice = '';
-  var voices = [];
   var image = document.querySelector('img');
-
-  if(typeof synth === 'undefined') {
-      return;
-  }
   
-  voices = synth.getVoices();
+  var voices = synth.getVoices();
   console.log(voices);
 
   //populate language and speaker options
-  for(var i = 0; i < voices.length; i++) {
+    for(var i = 0; i < voices.length; i++) {
       var option = document.createElement('option');
       option.textContent = voices[i].name + ' (' + voices[i].lang + ')';
       option.value = i;
       selectedVoice.appendChild(option)
-  }
+    }
+  
   
   //construct utter, speak it, update image until utter ends.
   button.addEventListener('click', function() {
